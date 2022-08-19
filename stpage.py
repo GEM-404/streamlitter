@@ -119,8 +119,8 @@ def create_body():
 
 
 def main():
-    main_bar('worldmap4.jpg')
-    sidebar_bg('search4.jpg')
+    main_bar('images/worldmap4.jpg')
+    sidebar_bg('images/search4.jpg')
     headers()
     create_body()
 
