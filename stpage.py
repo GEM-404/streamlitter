@@ -2,7 +2,6 @@ import base64
 import streamlit as st
 
 from PIL import Image
-from stream_bg import set_background
 from serp_ads import searcher
 
 from countries import COUNTRIES as cts
@@ -84,7 +83,7 @@ def sidebar_bg(side_bg):
 
 def headers():
     st.header("AD SEARCH SYSTEM")
-    image = Image.open('worldmap1.jpg')
+    image = Image.open('images/worldmap1.jpg')
     st.image(image, caption='WorldMap System Search')
     st.subheader("Google ad search system in python")
 
@@ -93,7 +92,9 @@ def headers():
 
 
 def get_total_results(country, domain, query):
-    """The total results is also given as a json response in the search results."""
+    """
+    The total results is also given as a json response in the search results.
+    """
     searches = searcher(country=country, query=query, domain=domain)
     st.text(f"{number_of_searches(searches)} results")
     return
