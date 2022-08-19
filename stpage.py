@@ -93,6 +93,7 @@ def headers():
 
 
 def get_total_results(country, domain, query):
+    """The total results is also given as a json response in the search results."""
     searches = searcher(country=country, query=query, domain=domain)
     st.text(f"{number_of_searches(searches)} results")
     return
