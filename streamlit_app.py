@@ -2,19 +2,19 @@ import streamlit as st
 
 from PIL import Image
 
+from countries import COUNTRIES as cts
+from csv_creator import create_csv
 from serp_ads import searcher
 from stream_bg import main_bar, get_bgs
-from countries import COUNTRIES as cts
 
 
 def get_items(dct):
 
     for value in dct.values():
         if isinstance(value, dict):
-            st.text("|------------------------------------------------------|")
             for key1, value1 in value.items():
                 st.success(f"{key1}: {value1}")
-            st.text("|______________________________________________________|")
+    return
 
 
 def number_of_searches(dct):
@@ -69,15 +69,21 @@ def create_body():
 
     st.button("Reset")
 
+    searches = searcher(country=country, query=query, domain=domain)
+
     if st.button('Search'):
-        get_items(searcher(country=country, query=query, domain=domain))
+        get_items(searches)
+
+    return query, searches
 
 
 def main():
     headers()
     sidebar()
-    create_body()
+    query, data = create_body()
     button_functionalities()
+
+    create_csv(data, query)
 
 
 if __name__ == '__main__':
