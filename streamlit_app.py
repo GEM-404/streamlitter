@@ -1,9 +1,9 @@
-import base64
 import streamlit as st
 
 from PIL import Image
-from serp_ads import searcher
 
+from serp_ads import searcher
+from stream_bg import main_bar, get_bgs
 from countries import COUNTRIES as cts
 
 
@@ -13,7 +13,7 @@ def get_items(dct):
         if isinstance(value, dict):
             st.text("|------------------------------------------------------|")
             for key1, value1 in value.items():
-                st.text(f"{key1}: {value1}")
+                st.success(f"{key1}: {value1}")
             st.text("|______________________________________________________|")
 
 
@@ -22,72 +22,26 @@ def number_of_searches(dct):
     return keys.keys()
 
 
-def new_bg():
-    st.markdown(
-        """
-        <style>
-        .reportview-container {
-            background: url("https://images.app.goo.gl/LFCobouKtT7oZ7Qv7");
-            background-size: cover;
-        }
-
-       .sidebar .sidebar-content {
-            background: url("https://images.app.goo.gl/LFCobouKtT7oZ7Qv7");
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-
-
-def main_bar(side_bg):
-
-    side_bg_ext = 'png'
-    b64data = f'{base64.b64encode(open(side_bg, "rb").read()).decode()}'
-    dta = f'data:image/{side_bg_ext};base64,{b64data}'
-    st.markdown(
-      f"""
-      <style>
-      .stApp {{
-             background: url({dta});
-             background-size: cover
-         }}
-
-      </style>
-      """,
-      unsafe_allow_html=True,
-      )
-
-    return
-
-
-def sidebar_bg(side_bg):
-    side_bg_ext = 'png'
-    b64data = f'{base64.b64encode(open(side_bg, "rb").read()).decode()}'
-    dta = f'data:image/{side_bg_ext};base64,{b64data}'
-    st.markdown(
-      f"""
-      <style>
-
-      [data-testid="stSidebar"] > div:first-child {{
-          background: url({dta});
-          background-size: cover;
-      }}
-      </style>
-      """,
-      unsafe_allow_html=True,
-      )
-
-    return
-
-
 def headers():
     st.header("AD SEARCH SYSTEM")
     image = Image.open('images/worldmap1.jpg')
     st.image(image, caption='WorldMap System Search')
     st.subheader("Google ad search system in python")
+    return
 
+
+def sidebar():
     st.sidebar.title("Google Search Ad System")
+    st.sidebar.button("Remove wallpaper")
+    return
+
+
+def button_functionalities():
+    random_bg = get_bgs()
+
+    if st.sidebar.button("Change wallpaper"):
+        main_bar(f"images/{random_bg}")
+
     return
 
 
@@ -120,10 +74,10 @@ def create_body():
 
 
 def main():
-    main_bar('images/worldmap4.jpg')
-    sidebar_bg('images/search4.jpg')
     headers()
+    sidebar()
     create_body()
+    button_functionalities()
 
 
 if __name__ == '__main__':
